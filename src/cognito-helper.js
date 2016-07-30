@@ -1,8 +1,8 @@
-import AWS from './aws'
+import aws from 'aws-sdk'
 import 'amazon-cognito-js/dist/amazon-cognito.min'
 
 export default function({loginsLocalStorageKey, awsAccountId, awsRegion, cognitoIdentityPoolId, authenticatedRoleArn, cognitoSyncDatasetKey}) {
-    return {socialSignIn, hasLocalAuthToken, authenticate, getLogins, removeLogins}
+    return {socialSignIn, hasLocalAuthToken, authenticate, getLogins, removeLogins, getCognitoCredentials, updateAwsConfig}
 
     function updateDataset(dataset, profileData) {
         return new Promise((resolve, reject) => {
@@ -182,23 +182,26 @@ export default function({loginsLocalStorageKey, awsAccountId, awsRegion, cognito
     }
 
     function updateAwsConfig({
-        Logins
+        Logins,
+        RoleArn,
+        AccountId,
+        IdentityPoolId
     }) {
         //configure AWS
-        return AWS.config.update({
+        return aws.config.update({
             region: awsRegion,
-            credentials: new AWS.CognitoIdentityCredentials({
+            credentials: new aws.CognitoIdentityCredentials({
                 Logins,
-                AccountId: awsAccountId,
-                IdentityPoolId: cognitoIdentityPoolId,
-                RoleArn: authenticatedRoleArn
+                AccountId,
+                IdentityPoolId,
+                RoleArn
             })
         })
     }
 
     function getDataset() {
         return new Promise((resolve, reject) => {
-            let cognitoSyncClient = new AWS.CognitoSyncManager()
+            let cognitoSyncClient = new aws.CognitoSyncManager()
 
             // get or create data set in local storage
             return cognitoSyncClient.openOrCreateDataset(cognitoSyncDatasetKey, (err, dataset) => {
@@ -214,7 +217,7 @@ export default function({loginsLocalStorageKey, awsAccountId, awsRegion, cognito
     function getCognitoCredentials() {
         // get AWS Cognito identity
         return new Promise((resolve, reject) => {
-            return AWS.config.credentials.get((err) => {
+            return aws.config.credentials.get((err) => {
                 if (err) {
                     return reject(err)
                 }
@@ -278,7 +281,10 @@ export default function({loginsLocalStorageKey, awsAccountId, awsRegion, cognito
         }
 
         updateAwsConfig({
-            Logins
+            Logins,
+            AccountId: awsAccountId,
+            IdentityPoolId: cognitoIdentityPoolId,
+            RoleArn: authenticatedRoleArn
         })
 
         return getCognitoCredentials()

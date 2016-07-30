@@ -30,7 +30,8 @@ module.exports = {
       // if we don't have a good solution, we should just make `babel-runtime`
       // a dependency in generated projects.
       // See https://github.com/facebookincubator/create-react-app/issues/255
-      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator')
+      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator'),
+      'aws-sdk': 'aws-sdk/dist/aws-sdk'
     }
   },
   resolveLoader: {
@@ -71,9 +72,16 @@ module.exports = {
         test: /\.(mp4|webm)$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'url?limit=10000'
+      },
+      {
+        test: /aws-sdk.js/,
+        loader: 'exports?AWS'
       }
     ]
   },
+  noParse: [
+    /aws-sdk.js/
+  ],
   eslint: {
     configFile: path.join(__dirname, 'eslint.js'),
     useEslintrc: false

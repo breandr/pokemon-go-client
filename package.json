@@ -26,6 +26,7 @@
     "eslint-plugin-import": "1.12.0",
     "eslint-plugin-jsx-a11y": "2.0.1",
     "eslint-plugin-react": "5.2.2",
+    "exports-loader": "^0.6.3",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.9.0",
     "filesize": "3.3.0",
@@ -44,13 +45,14 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
-    "google-maps": "^3.2.1",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1",
     "amazon-cognito-identity-js": "github:aws/amazon-cognito-identity-js",
     "amazon-cognito-js": "github:aws/amazon-cognito-js",
     "aws-sdk": "^2.4.1",
+    "google-maps": "^3.2.1",
     "jsbn": "^0.1.0",
+    "pokemon-go-pokedex": "github:biuni/PokemonGOPokedex",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
     "sjcl": "^1.0.3"
   },
   "scripts": {
