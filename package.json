@@ -50,14 +50,17 @@
     "aws-sdk": "^2.4.1",
     "google-maps": "^3.2.1",
     "jsbn": "^0.1.0",
+    "json-loader": "^0.5.4",
     "pokemon-go-pokedex": "github:biuni/PokemonGOPokedex",
+    "proto-loader": "^0.2.0",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "sjcl": "^1.0.3"
   },
   "scripts": {
     "start": "node ./scripts/start.js",
-    "build": "node ./scripts/build.js"
+    "build": "node ./scripts/build.js",
+    "deploy": "aws s3 sync ./build s3://poke-go-sentry --delete"
   },
   "eslintConfig": {
     "extends": "./config/eslint.js"

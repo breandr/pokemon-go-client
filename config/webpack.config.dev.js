@@ -60,7 +60,7 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        include: [paths.appSrc, paths.appNodeModules],
+        include: [paths.appSrc, paths.appNodeModules, '/Users/brett/Projects/pokemon-go/Pokemon-GO-node-api'],
         loader: 'json'
       },
       {
